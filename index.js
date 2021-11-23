@@ -1,5 +1,6 @@
 const express = require('express');
 const exphbs  = require('express-handlebars');
+let AvoRoutes = require("./routes/routes");
 
 const app = express();
 const PORT =  process.env.PORT || 3019;
@@ -16,13 +17,18 @@ app.use(express.static('public'));
 app.engine('handlebars', exphbs.engine());
 app.set('view engine', 'handlebars');
 
-let counter = 0;
+const avoRoutes = AvoRoutes();
+// let counter = 0;
 
-app.get('/', function(req, res) {
-	res.render('index', {
-		counter
-	});
-});
+// app.get('/', function(req, res) {
+// 	res.render('index', {
+// 		counter
+// 	});
+// });
+app.get("/", avoRoutes.home);
+app.post("/shops", avoRoutes.shops());
+app.get("/deals", avoRoutes.deals());
+app.post("/Choose", avoRoutes.choose());
 
 // start  the server and start listening for HTTP request on the PORT number specified...
 app.listen(PORT, function() {
